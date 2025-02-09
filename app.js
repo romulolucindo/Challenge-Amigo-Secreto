@@ -1,28 +1,22 @@
-//O principal objetivo deste desafio é fortalecer suas habilidades em lógica de programação. Aqui você deverá desenvolver a lógica para resolver o problema.
-/*
-1º Adicionar nomes: Os usuários escreverão o nome de um amigo em um campo de texto e o adicionarão a uma lista visível ao clicar em "Adicionar".
-
-2º Validar entrada: Se o campo de texto estiver vazio, o programa exibirá um alerta solicitando um nome válido.
-
-3º Visualizar a lista: Os nomes inseridos aparecerão em uma lista abaixo do campo de entrada.
-
-4º Sorteio aleatório: Ao clicar no botão "Sortear Amigo", um nome da lista será selecionado aleatoriamente e exibido na página.
-*/
-// Array para guardar os nomes dos amigos
-const listaNomes = []; // Array para armazenar os nomes
+const listaNomes = [];
+const nomesSorteados = [];
 
 function adicionarAmigo() {
-  const inputNome = document.getElementById("amigo"); // Captura o input
-  const nome = inputNome.value.trim(); // Pega o valor digitado e remove espaços extras
+  const inputNome = document.getElementById("amigo");
+  const nome = inputNome.value.trim();
 
-  if (nome !== "") {
+  // Verifica se o nome não está vazio e não foi adicionado
+  if (nome !== "" && !listaNomes.includes(nome)) {
     listaNomes.push(nome); // Adiciona o nome ao array
     inputNome.value = ""; // Limpa o campo de entrada
     atualizarLista();
+  } else if (listaNomes.includes(nome)) {
+    alert('Esse Nome já foi adicionado');
   } else {
     alert("Digite um nome válido!");
   }
 }
+
 function atualizarLista() {
   const lista = document.getElementById("listaAmigos");
   lista.innerHTML = ""; // Limpa a lista antes de atualizar
@@ -33,9 +27,34 @@ function atualizarLista() {
     lista.appendChild(li); // Adiciona o <li> à lista
   });
 }
-function sortearNomes() {
+
+function sortearAmigo() {
   if (listaNomes.length === 0) {
     alert("Precisamos de pelo menos 1 nome para sortear");
     return;
   }
+
+  let nomeDisponivel = null; // Usar 'let' para que a variável possa ser alterada
+
+  // Laço para encontrar um nome não sorteado
+  for (let i = 0; i < listaNomes.length; i++) {
+    if (!nomesSorteados.includes(listaNomes[i])) {
+      nomeDisponivel = listaNomes[i];
+      break; // Encontrou um nome não sorteado
+    }
+  }
+
+  // Se todos os nomes foram sorteados, exibe alerta
+  if (nomeDisponivel === null) {
+    alert("Todos os nomes já foram sorteados!");
+    return;
+  }
+
+  // Sorteia o nome encontrado
+  nomesSorteados.push(nomeDisponivel); // Adiciona o nome sorteado à lista de nomes sorteados
+
+  // Exibe o nome sorteado
+  const resultado = document.getElementById('resultado');
+  resultado.innerHTML = `<li>${nomeDisponivel}</li>`;
+  console.log(nomeDisponivel); // Exibe no console para conferirmos
 }
