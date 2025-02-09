@@ -1,9 +1,10 @@
-const listaNomes = [];
+// Array para guardar os nomes dos amigos
+const listaNomes = []; // Array para armazenar os nomes
 const nomesSorteados = [];
 
 function adicionarAmigo() {
-  const inputNome = document.getElementById("amigo");
-  const nome = inputNome.value.trim();
+  const inputNome = document.getElementById("amigo"); // Captura o input
+  const nome = inputNome.value.trim(); // Pega o valor digitado e remove espaços extras
 
   // Verifica se o nome não está vazio e não foi adicionado
   if (nome !== "" && !listaNomes.includes(nome)) {
